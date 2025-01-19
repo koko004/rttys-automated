@@ -30,6 +30,7 @@ services:
     rttys:
         stdin_open: true
         tty: true
+        restart: always
         ports:
             - 5912:5912
             - 5913:5913
