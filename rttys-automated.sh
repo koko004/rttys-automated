@@ -26,15 +26,19 @@ install_rttys_server() {
     echo "Creating rttys directory and configuration file..."
     mkdir -p rttys
     cat > rttys/rttys.yml <<EOF
-version: '3'
+version '3.9'                                                                  
 services:
-  rttys:
-    image: zhaojh329/rttys:latest
-    restart: always
-    ports:
-      - "5912:5912"
-    environment:
-      - ARGS="-a :5912 -u admin -p password"
+    rttys:
+        stdin_open: true
+        tty: true
+        ports:
+            - 5912:5912
+            - 5913:5913
+            - 5914:5914
+        image: zhaojh329/rttys:latest
+        command: run --addr-http-proxy :5914
+        environment:
+          - ARGS="-a :5912 -u admin -p password"
 EOF
 
     echo "Starting rttys server with Docker Compose..."
