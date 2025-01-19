@@ -63,6 +63,34 @@ install_rtty_client() {
     cmake ..
     make install
     echo "rtty client installed."
+
+    # Solicitar información para crear el servicio
+    read -p "Enter your device ID: " device_id
+    read -p "Enter the server IP address: " server_ip
+    read -p "Enter the device description: " device_description
+
+    # Crear el servicio de systemd para rtty
+    echo "Creating systemd service for rtty client..."
+    cat > /etc/systemd/system/rtty.service <<EOF
+[Unit]
+Description=RTTY Client
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/rtty -I '$device_id' -h '$server_ip' -p 5912 -a -v -d '$device_description'
+Restart=always
+User=$USER
+
+[Install]
+WantedBy=multi-user.target
+EOF
+
+    # Recargar los servicios de systemd y habilitar el servicio
+    systemctl daemon-reload
+    systemctl enable rtty.service
+    systemctl start rtty.service
+
+    echo "rtty client service installed and started."
     read -n 1 -s -r -p "Press any key to continue..."
     clear
     echo
