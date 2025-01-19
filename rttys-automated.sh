@@ -25,8 +25,7 @@ install_rttys_server() {
 
     echo "Creating rttys directory and configuration file..."
     mkdir -p rttys
-    cat > rttys/rttys.yml <<EOF
-version '3.9'                                                                  
+    cat > rttys/rttys.yml <<EOF                                                             
 services:
     rttys:
         stdin_open: true
