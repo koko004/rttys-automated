@@ -53,7 +53,7 @@ EOF
 install_rtty_client() {
     echo "Installing dependencies for rtty client..."
     apt update
-    apt install -y libev-dev libssl-dev cmake
+    apt install -y libev-dev libssl-dev cmake make build-essential
 
     echo "Cloning rtty repository..."
     git clone --recursive https://github.com/zhaojh329/rtty.git
